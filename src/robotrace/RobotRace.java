@@ -238,14 +238,55 @@ public class RobotRace extends Base {
      * and origin (yellow).
      */
     public void drawAxisFrame() {
+        
+            int sp_subd    = 20;  //splice subdivisions
+            int st_subd    = 5;   //stack subdivisions
+            
+            gl.glPushMatrix();
+            gl.glColor4f(0, 0, 1, 1);    //color: blue
+            drawArrow();             //Draw z axis
+            gl.glPopMatrix();
+            
+            gl.glPushMatrix();
+            gl.glColor4f(1, 0, 0, 1);    //color: red
+            gl.glRotated(90, 0, 1, 0);   //90° clock-wise Rotation around y axis
+            drawArrow();             //Draw x axis
+            gl.glPopMatrix();
 
+            gl.glPushMatrix();
+            gl.glColor4f(0, 1, 0, 1);    //color: green
+            gl.glRotated(-90, 1, 0, 0);   //90° counter-clockwise Rotation around x axis
+            drawArrow();             //Draw y axis
+            gl.glPopMatrix();
+            
+            gl.glColor4f(1, 1, 0, 1);   //Color: yellow
+            glut.glutSolidSphere(0.1, 20, 5);
+            gl.glColor4f(1, 1, 1, 1);   //Color is reset
+          
     }
+    
     
     /**
      * Draws a single arrow
      */
-    public void drawArrow() {  
+    public void drawArrow() {
+           
+        
+           double b_r    = 0.02;   //base radius
+           double b_h    = 1.0;   //base height
+           int l_subd    = 20;  //lateral subdivisions
+           int b_subd    = 5;  //base subdivisions
+           double c_h     = 0.17;   //cone height
+           double c_r     = 0.05;   //cone base radius
+          
+           glut.glutSolidCylinder(b_r, b_h, l_subd, b_subd);    //Base cylinder is drawn
+           
+           gl.glPushMatrix();
+           gl.glTranslated(0, 0, 1);                            //Translation by 1 for the arrow tips along their axis
 
+           glut.glutSolidCone(c_r, c_h, l_subd, b_subd);        //Arrow tip is drawn
+           gl.glPopMatrix();
+          
     }
  
     /**
